@@ -1,9 +1,10 @@
 import React from 'react'
+import Sidebar from './components/Sidebar'
 
 function App() {
   return (
     <div>
-      <h1 className="text-emerald-300">Hello world</h1>
+      <Sidebar />
     </div>
   )
 }

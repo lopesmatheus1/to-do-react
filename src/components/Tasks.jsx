@@ -2,6 +2,10 @@ import React from 'react'
 import Button from './Button'
 import AddIcon from '../assets/icons/Add.svg?react'
 import TrashIcon from '../assets/icons/trash.svg?react'
+import SunIcon from '../assets/icons/sun.svg?react'
+import CloudSun from '../assets/icons/cloud-sun.svg?react'
+import Moon from '../assets/icons/moon.svg?react'
+import TaskSeparator from './TaskSeparator'
 
 const Tasks = () => {
   return (
@@ -23,6 +27,25 @@ const Tasks = () => {
             Nova Tarefa
             <AddIcon />
           </Button>
+        </div>
+      </div>
+
+      {/*LISTA DE TAREFAS*/}
+
+      <div className="rounded-xl bg-white p-6">
+        {/*MANHÃ*/}
+        <div className="space-y-3">
+          <TaskSeparator text="Manhã" icon={<SunIcon />} />
+        </div>
+
+        {/*TARDE*/}
+        <div className="my-6 space-y-3">
+          <TaskSeparator text="Tarde" icon={<CloudSun />} />
+        </div>
+
+        {/*NOITE*/}
+        <div className="space-y-3">
+          <TaskSeparator text="Noite" icon={<Moon />} />
         </div>
       </div>
     </div>

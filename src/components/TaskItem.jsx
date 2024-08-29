@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import CheckIcon from '../assets/icons/check.svg?react'
-import LoaderIcon from '../assets/icons/loader-circle.svg?react'
-import DetailsIcon from '../assets/icons/Group.svg?react'
+import {
+  CheckIcon,
+  LoaderIcon,
+  DetailsIcon,
+  TrashIcon,
+} from '../assets/icons/index'
 import Button from './Button'
-import TrashIcon from '../assets/icons/trash.svg?react'
 
 const TaskItem = ({ task, handleCheckBoxClick, handleDeleteClick }) => {
   const getStatusClasses = () => {

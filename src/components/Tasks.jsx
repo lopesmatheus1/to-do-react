@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
 import Button from './Button'
-import AddIcon from '../assets/icons/Add.svg?react'
-import TrashIcon from '../assets/icons/trash.svg?react'
-import SunIcon from '../assets/icons/sun.svg?react'
-import CloudSun from '../assets/icons/cloud-sun.svg?react'
-import Moon from '../assets/icons/moon.svg?react'
+import {
+  AddIcon,
+  TrashIcon,
+  SunIcon,
+  CloudSun,
+  MoonIcon,
+} from '../assets/icons/'
 import TaskSeparator from './TaskSeparator'
 import TASKS from '../constants/task'
 import TaskItem from './TaskItem'
+import { toast } from 'sonner'
+import AddTaskDialog from './AddTaskDialog'
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASKS)
+  const [addTaskDialogIsOpen, setAddTaskDialogIsOpen] = useState(false)
 
   const morningTasks = tasks.filter((task) => task.time === 'morning')
   const afternoonTasks = tasks.filter((task) => task.time === 'afternoon')
@@ -19,6 +24,11 @@ const Tasks = () => {
   const handleTaskDeleteClick = (taskId) => {
     const newTasks = tasks.filter((task) => task.id !== taskId)
     setTasks(newTasks)
+    toast.success('Tarefa deletada com sucesso')
+  }
+
+  const handleAllTasksDeleteClick = () => {
+    setTasks([])
   }
 
   const handleTaskCheckBoxClick = (taskId) => {
@@ -53,14 +63,16 @@ const Tasks = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="colorless">
+          <Button variant="colorless" onClick={handleAllTasksDeleteClick}>
             Limpar tarefas
             <TrashIcon />
           </Button>
-          <Button>
+          <Button onClick={() => setAddTaskDialogIsOpen(true)}>
             Nova Tarefa
             <AddIcon />
           </Button>
+
+          <AddTaskDialog isOpen={addTaskDialogIsOpen}></AddTaskDialog>
         </div>
       </div>
 
@@ -99,7 +111,7 @@ const Tasks = () => {
 
         {/*NOITE*/}
         <div className="space-y-3">
-          <TaskSeparator text="Noite" icon={<Moon />} />
+          <TaskSeparator text="Noite" icon={<MoonIcon />} />
 
           {/* TAREFAS NOITE */}
           {eveningTasks.map((task) => (

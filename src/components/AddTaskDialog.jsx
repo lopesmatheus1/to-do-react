@@ -9,12 +9,12 @@ import TimeSelect from './TimeSelect'
 
 // eslint-disable-next-line react/prop-types
 const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
-  const [time, setTime] = useState('')
-  const [title, setTitle] = useState('morning')
+  const [time, setTime] = useState('morning') // Inicializa como 'morning'
+  const [title, setTitle] = useState('')
   const [description, setDesciption] = useState('')
 
   useEffect(() => {
-    setTime('')
+    setTime('afternoon')
     setTitle('')
     setDesciption('')
   }, [isOpen])

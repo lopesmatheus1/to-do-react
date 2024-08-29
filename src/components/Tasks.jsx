@@ -27,10 +27,6 @@ const Tasks = () => {
     toast.success('Tarefa deletada com sucesso')
   }
 
-  const handleAllTasksDeleteClick = () => {
-    setTasks([])
-  }
-
   const handleTaskCheckBoxClick = (taskId) => {
     const newTasks = tasks.map((task) => {
       if (task.id !== taskId) {
@@ -63,7 +59,7 @@ const Tasks = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="colorless" onClick={handleAllTasksDeleteClick}>
+          <Button variant="colorless" onClick={() => setTasks([])}>
             Limpar tarefas
             <TrashIcon />
           </Button>
@@ -72,7 +68,10 @@ const Tasks = () => {
             <AddIcon />
           </Button>
 
-          <AddTaskDialog isOpen={addTaskDialogIsOpen}></AddTaskDialog>
+          <AddTaskDialog
+            isOpen={addTaskDialogIsOpen}
+            handleClose={() => setAddTaskDialogIsOpen(false)}
+          ></AddTaskDialog>
         </div>
       </div>
 

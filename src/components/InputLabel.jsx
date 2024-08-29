@@ -3,7 +3,7 @@ import React from 'react'
 
 const InputLabel = (props) => {
   return (
-    <label className="text-brand-dark-blue text-sm font-semibold" {...props}>
+    <label className="text-sm font-semibold text-[#35383E]" {...props}>
       {props.children}
     </label>
   )

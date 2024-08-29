@@ -1,15 +1,38 @@
-/* eslint-disable react/prop-types */
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Input from './Input'
 import Button from './Button'
 import { CSSTransition } from 'react-transition-group'
 import './AddTaskDialog.css'
-
+import { v4 } from 'uuid'
 import TimeSelect from './TimeSelect'
 
-const AddTaskDialog = ({ isOpen, handleClose }) => {
+// eslint-disable-next-line react/prop-types
+const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
+  const [time, setTime] = useState('')
+  const [title, setTitle] = useState('morning')
+  const [description, setDesciption] = useState('')
+
+  useEffect(() => {
+    setTime('')
+    setTitle('')
+    setDesciption('')
+  }, [isOpen])
+
   const nodeRef = useRef()
+
+  const handleSaveClick = () => {
+    handleSubmit({
+      id: v4(),
+      title,
+      time,
+      description,
+      status: 'not_started',
+    })
+
+    handleClose()
+  }
+
   return (
     <CSSTransition
       nodeRef={nodeRef}
@@ -38,14 +61,21 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
                   id="title"
                   label={'Título'}
                   placeholder="Insira o título da tarefa"
+                  value={title}
+                  onChange={(event) => setTitle(event.target.value)}
                 />
-                <TimeSelect />
+                <TimeSelect
+                  value={time}
+                  onChange={(event) => setTime(event.target.value)}
+                />
 
                 <Input
                   id="description"
                   label={'Descrição'}
                   placeholder="Descreva a tarefa"
+                  onChange={(event) => setDesciption(event.target.value)}
                 />
+
                 <div className="flex gap-3">
                   <Button
                     size={'large'}
@@ -55,7 +85,11 @@ const AddTaskDialog = ({ isOpen, handleClose }) => {
                   >
                     Canelar
                   </Button>
-                  <Button size={'large'} className="w-full">
+                  <Button
+                    size={'large'}
+                    className="w-full"
+                    onClick={handleSaveClick}
+                  >
                     Salvar
                   </Button>
                 </div>

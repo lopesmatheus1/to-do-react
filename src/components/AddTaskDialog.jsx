@@ -10,20 +10,21 @@ import TimeSelect from './TimeSelect'
 // eslint-disable-next-line react/prop-types
 const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
   const [time, setTime] = useState('morning') // Inicializa como 'morning'
-  const [title, setTitle] = useState('')
-  const [description, setDesciption] = useState('')
   const [errors, setErrors] = useState([])
+
+  const nodeRef = useRef()
+  const titleRef = useRef()
+  const descriptionRef = useRef()
 
   useEffect(() => {
     setTime('morning')
-    setTitle('')
-    setDesciption('')
   }, [isOpen])
-
-  const nodeRef = useRef()
 
   const handleSaveClick = () => {
     const newErros = []
+
+    const title = titleRef.current.value
+    const description = descriptionRef.current.value
 
     if (!title.trim()) {
       newErros.push({
@@ -45,10 +46,8 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
         message: 'A descrição é obrigatório.',
       })
     }
-
+    setErrors(newErros)
     if (newErros.length > 0) {
-      setErrors(newErros)
-      console.log(newErros)
       return
     }
 
@@ -97,9 +96,8 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                   id="title"
                   label={'Título'}
                   placeholder="Insira o título da tarefa"
-                  value={title}
-                  onChange={(event) => setTitle(event.target.value)}
                   errorMessage={titleError?.message}
+                  ref={titleRef}
                 />
 
                 <TimeSelect
@@ -112,8 +110,8 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                   id="description"
                   label={'Descrição'}
                   placeholder="Descreva a tarefa"
-                  onChange={(event) => setDesciption(event.target.value)}
                   errorMessage={descriptionError?.message}
+                  ref={descriptionRef}
                 />
 
                 <div className="flex gap-3">

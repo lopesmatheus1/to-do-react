@@ -4,11 +4,11 @@ import React from 'react'
 const SidebarButton = ({ children, variant }) => {
   const getVariantClasses = () => {
     if (variant === 'unselected') {
-      return 'text-[#35383e]'
+      return 'text-brand-dark-blue'
     }
 
     if (variant === 'selected') {
-      return 'bg-[#E6F7F8] text-[#00ADB5]'
+      return 'bg-brand-primary/10 text-brand-primary'
     }
   }
   return (

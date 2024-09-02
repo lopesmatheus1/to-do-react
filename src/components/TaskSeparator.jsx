@@ -3,9 +3,9 @@ import React from 'react'
 
 const TaskSeparator = ({ icon, text }) => {
   return (
-    <div className="border-[#F4F4F5 ] flex gap-3 border-b-2 border-solid pb-2">
+    <div className="flex gap-3 border-b-2 border-solid border-brand-border pb-2">
       {icon}
-      <p className="font-semibold text-[#9A9C9F]">{text}</p>
+      <p className="font-semibold text-brand-text-gray">{text}</p>
     </div>
   )
 }

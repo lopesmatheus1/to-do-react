@@ -5,7 +5,22 @@ export default {
     fontFamily: {
       sans: ['Poppins', 'sans-serif'],
     },
-    extend: {}, // Este é o local onde você pode estender temas padrão do Tailwind CSS.
+    extend: {
+      colors: {
+        brand: {
+          'dark-blue': '#35383E',
+          primary: '#00ADB5',
+          'dark-gray': '#818181',
+          'text-gray': '#9A9C9F',
+          'light-gray': '#EEEEEE',
+          white: '#FFFFFF',
+          background: '#F8F8F8',
+          border: '#F4F4F5',
+          process: '#FFAA04',
+          danger: '#EF4444',
+        },
+      },
+    }, // Este é o local onde você pode estender temas padrão do Tailwind CSS.
   },
   plugins: [], // Aqui você pode adicionar plugins para estender a funcionalidade do Tailwind CSS.
 }

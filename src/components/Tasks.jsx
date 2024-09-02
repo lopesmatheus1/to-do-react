@@ -23,11 +23,8 @@ const Tasks = () => {
       const response = await fetch('http://localhost:3000/tasks', {
         method: 'GET',
       })
-
       const tasks = await response.json()
-
       //APÓS PEGAR OS DADOS ATUALIZAR STATE "TASKS"
-
       setTasks(tasks)
     }
     fetchTasks()
@@ -42,15 +39,12 @@ const Tasks = () => {
       if (task.id !== taskId) {
         return task
       }
-
       if (task.status === 'not_started') {
         return { ...task, status: 'in_progress' }
       }
-
       if (task.status === 'in_progress') {
         return { ...task, status: 'done' }
       }
-
       if (task.status === 'done') {
         return { ...task, status: 'not_started' }
       }
@@ -58,15 +52,8 @@ const Tasks = () => {
     setTasks(newTasks)
   }
 
-  const handleAddTaskSubmit = async (task) => {
+  const onTaskSubmitSuccess = (task) => {
     //CHAMAR A API PARA ADICIONAR TAREFAS
-    const response = await fetch('http://localhost:3000/tasks', {
-      method: 'POST',
-      body: JSON.stringify(task),
-    })
-    if (!response.ok) {
-      return toast.error('Erro ao adicionar tarefa. Por favor, tente novamente')
-    }
 
     setTasks([...tasks, task])
     toast.success('Tarefa adicionada!')
@@ -101,7 +88,7 @@ const Tasks = () => {
           <AddTaskDialog
             isOpen={addTaskDialogIsOpen}
             handleClose={() => setAddTaskDialogIsOpen(false)}
-            handleSubmit={handleAddTaskSubmit}
+            onSubmiteSuccess={onTaskSubmitSuccess}
           ></AddTaskDialog>
         </div>
       </div>

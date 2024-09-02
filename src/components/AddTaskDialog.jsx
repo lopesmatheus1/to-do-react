@@ -7,11 +7,14 @@ import './AddTaskDialog.css'
 import { v4 } from 'uuid'
 import TimeSelect from './TimeSelect'
 import PropTypes from 'prop-types'
+import { toast } from 'sonner'
+import { LoaderIcon } from '../assets/icons/index'
 
 // eslint-disable-next-line react/prop-types
-const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
+const AddTaskDialog = ({ isOpen, handleClose, onSubmiteSuccess }) => {
   const [time, setTime] = useState('morning') // Inicializa como 'morning'
   const [errors, setErrors] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const nodeRef = useRef()
   const titleRef = useRef()
@@ -21,9 +24,9 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
     setTime('morning')
   }, [isOpen])
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
+    setIsLoading(true)
     const newErros = []
-
     const title = titleRef.current.value
     const description = descriptionRef.current.value
 
@@ -49,17 +52,20 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
     }
     setErrors(newErros)
     if (newErros.length > 0) {
-      return
+      return setIsLoading(false)
     }
 
-    handleSubmit({
-      id: v4(),
-      title,
-      time,
-      description,
-      status: 'not_started',
+    const task = { id: v4(), title, time, description, status: 'not_started' }
+    const response = await fetch('http://localhost:3000/tasks', {
+      method: 'POST',
+      body: JSON.stringify(task),
     })
-
+    if (!response.ok) {
+      setIsLoading(false)
+      return toast.error('Erro ao adicionar tarefa. Por favor, tente novamente')
+    }
+    onSubmiteSuccess(task)
+    setIsLoading(false)
     handleClose()
   }
 
@@ -99,12 +105,14 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                   placeholder="Insira o título da tarefa"
                   errorMessage={titleError?.message}
                   ref={titleRef}
+                  disabled={isLoading}
                 />
 
                 <TimeSelect
                   value={time}
                   onChange={(event) => setTime(event.target.value)}
                   errorMessage={timeError?.message}
+                  disabled={isLoading}
                 />
 
                 <Input
@@ -113,6 +121,7 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                   placeholder="Descreva a tarefa"
                   errorMessage={descriptionError?.message}
                   ref={descriptionRef}
+                  disabled={isLoading}
                 />
 
                 <div className="flex gap-3">
@@ -129,7 +138,9 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                     size={'large'}
                     className="w-full"
                     onClick={handleSaveClick}
+                    disabled={isLoading}
                   >
+                    {isLoading && <LoaderIcon className="animate-spin" />}
                     Salvar
                   </Button>
                 </div>

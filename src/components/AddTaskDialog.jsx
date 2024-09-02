@@ -118,12 +118,13 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                   <Button
                     size={'large'}
                     className="w-full"
-                    variant="secondary"
+                    color="secondary"
                     onClick={handleClose}
                   >
                     Canelar
                   </Button>
                   <Button
+                    color="primary"
                     size={'large'}
                     className="w-full"
                     onClick={handleSaveClick}

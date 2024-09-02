@@ -1,40 +1,36 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import { tv } from 'tailwind-variants'
 
 const Button = ({
   children,
-  variant = 'primary',
+  color = 'primary',
   size = 'small',
   className,
   ...rest
 }) => {
-  const getVariantClasses = () => {
-    if (variant === 'colorless') {
-      return 'text-brand-dark-gray bg-transparent'
-    }
-    if (variant === 'primary') {
-      return 'bg-brand-primary text-white'
-    }
+  const button = tv({
+    base: 'flex items-center justify-center gap-2 rounded-md px-3 font-semibold transition hover:opacity-80',
+    variants: {
+      color: {
+        primary: 'bg-[#00ADB5] text-white',
+        colorless: 'bg-transparent text-[#818181]',
+        secondary: 'bg-[#EEE] text-[#35383E]',
+      },
+      size: {
+        small: 'py-1 text-xs',
+        large: 'py-2 text-sm',
+      },
+    },
 
-    if (variant === 'secondary') {
-      return 'bg-brand-light-gray text-brand-dark-blue'
-    }
-  }
+    defaultVariants: {
+      color: 'primary',
+      size: 'small',
+    },
+  })
 
-  const getSizeClasses = () => {
-    if (size === 'small') {
-      return ' py-1 text-xs'
-    }
-
-    if (size === 'large') {
-      return ' py-2 text-sm'
-    }
-  }
   return (
-    <button
-      className={`text-xstext flex items-center justify-center gap-2 rounded-md px-3 font-semibold transition hover:opacity-80 ${getVariantClasses()} ${getSizeClasses()} ${className}`}
-      {...rest}
-    >
+    <button className={button({ color, size, className })} {...rest}>
       {children}
     </button>
   )

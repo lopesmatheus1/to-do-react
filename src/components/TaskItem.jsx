@@ -51,7 +51,7 @@ const TaskItem = ({ task, handleCheckBoxClick, handleDeleteClick }) => {
         </a>
         <Button
           onClick={() => handleDeleteClick(task.id)}
-          variant="colorless"
+          color="colorless"
           className="text-brand-text-gray"
         >
           <TrashIcon />

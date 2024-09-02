@@ -64,7 +64,7 @@ const Tasks = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="colorless" onClick={() => setTasks([])}>
+          <Button color="colorless" onClick={() => setTasks([])}>
             Limpar tarefas
             <TrashIcon />
           </Button>

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CheckIcon,
   LoaderIcon,
@@ -8,8 +8,24 @@ import {
 } from '../assets/icons/index'
 import PropTypes from 'prop-types'
 import Button from './Button'
+import { toast } from 'sonner'
 
-const TaskItem = ({ task, handleCheckBoxClick, handleDeleteClick }) => {
+const TaskItem = ({ task, handleCheckBoxClick, onDeleteSuccess }) => {
+  const [deleteIsLoading, setDeleteIsLoading] = useState(false)
+
+  const handleDeleteClick = async () => {
+    setDeleteIsLoading(true)
+    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+      method: 'DELETE',
+    })
+    if (!response.ok) {
+      setDeleteIsLoading(false)
+      return toast.error('Erro ao deletar tarefa. Por favor, tente novamente!')
+    }
+    onDeleteSuccess(task.id)
+    setDeleteIsLoading(false)
+  }
+
   const getStatusClasses = () => {
     if (task.status === 'done') {
       return 'bg-brand-primary   text-brand-primary  '
@@ -40,7 +56,7 @@ const TaskItem = ({ task, handleCheckBoxClick, handleDeleteClick }) => {
           />
           {task.status === 'done' && <CheckIcon />}
           {task.status === 'in_progress' && (
-            <LoaderIcon className="animate-spin" />
+            <LoaderIcon className="animate-spin text-brand-white" />
           )}
         </label>
         {task.title}
@@ -51,11 +67,15 @@ const TaskItem = ({ task, handleCheckBoxClick, handleDeleteClick }) => {
           <DetailsIcon />
         </a>
         <Button
-          onClick={() => handleDeleteClick(task.id)}
+          onClick={handleDeleteClick}
+          disabled={deleteIsLoading}
           color="colorless"
-          className="text-brand-text-gray"
         >
-          <TrashIcon />
+          {deleteIsLoading ? (
+            <LoaderIcon className="animate-spin text-brand-text-gray" />
+          ) : (
+            <TrashIcon className="text-brand-text-gray" />
+          )}
         </Button>
       </div>
     </div>

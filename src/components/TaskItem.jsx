@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types'
 import Button from './Button'
 import { toast } from 'sonner'
+import { Link } from 'react-router-dom'
 
 const TaskItem = ({ task, handleCheckBoxClick, onDeleteSuccess }) => {
   const [deleteIsLoading, setDeleteIsLoading] = useState(false)
@@ -63,9 +64,9 @@ const TaskItem = ({ task, handleCheckBoxClick, onDeleteSuccess }) => {
       </div>
 
       <div className="flex items-center gap-3">
-        <a href="#" className="transition hover:opacity-75">
+        <Link to={`/task/${task.id}`} className="transition hover:opacity-75">
           <DetailsIcon />
-        </a>
+        </Link>
         <Button
           onClick={handleDeleteClick}
           disabled={deleteIsLoading}

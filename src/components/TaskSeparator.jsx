@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from 'react'
+import PropTypes from 'prop-types' // ES6
 
 const TaskSeparator = ({ icon, text }) => {
   return (
@@ -8,6 +8,11 @@ const TaskSeparator = ({ icon, text }) => {
       <p className="font-semibold text-brand-text-gray">{text}</p>
     </div>
   )
+}
+
+TaskSeparator.propTypes = {
+  text: PropTypes.string.isRequired,
+  icon: PropTypes.node.isRequired,
 }
 
 export default TaskSeparator

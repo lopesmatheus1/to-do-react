@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const InputLabel = (props) => {
   return (
@@ -7,6 +7,10 @@ const InputLabel = (props) => {
       {props.children}
     </label>
   )
+}
+
+InputLabel.propTypes = {
+  children: PropTypes.node.isRequired,
 }
 
 export default InputLabel

@@ -6,6 +6,7 @@ import { CSSTransition } from 'react-transition-group'
 import './AddTaskDialog.css'
 import { v4 } from 'uuid'
 import TimeSelect from './TimeSelect'
+import PropTypes from 'prop-types'
 
 // eslint-disable-next-line react/prop-types
 const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
@@ -140,6 +141,12 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
       </div>
     </CSSTransition>
   )
+}
+
+AddTaskDialog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 }
 
 export default AddTaskDialog

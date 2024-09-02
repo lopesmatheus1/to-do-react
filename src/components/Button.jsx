@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react'
 import { tv } from 'tailwind-variants'
+import PropTypes from 'prop-types'
 
 const Button = ({
   children,
@@ -34,6 +34,13 @@ const Button = ({
       {children}
     </button>
   )
+}
+
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  color: PropTypes.oneOf(['primary', 'colorless', 'secondary']),
+  size: PropTypes.oneOf(['small', 'large']),
+  className: PropTypes.string,
 }
 
 export default Button

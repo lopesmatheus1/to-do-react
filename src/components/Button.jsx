@@ -13,9 +13,10 @@ const Button = ({
     base: 'flex items-center justify-center gap-2 rounded-md px-3 font-semibold transition hover:opacity-80',
     variants: {
       color: {
-        primary: 'bg-[#00ADB5] text-white',
-        colorless: 'bg-transparent text-[#818181]',
-        secondary: 'bg-[#EEE] text-[#35383E]',
+        primary: 'bg-brand-primary text-white',
+        colorless: 'bg-transparent text-brand-dark-gray',
+        secondary: 'bg-brand-light-gray text-brand-dark-blue',
+        danger: 'bg-brand-danger text-white',
       },
       size: {
         small: 'py-1 text-xs',
@@ -44,7 +45,7 @@ const Button = ({
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  color: PropTypes.oneOf(['primary', 'colorless', 'secondary']),
+  color: PropTypes.oneOf(['primary', 'colorless', 'secondary', 'danger']),
   size: PropTypes.oneOf(['small', 'large']),
   className: PropTypes.string,
 }

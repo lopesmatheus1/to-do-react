@@ -8,7 +8,8 @@ import TaskIcon from './tasks.svg?react'
 import CheckIcon from './check.svg?react'
 import LoaderIcon from './loader-circle.svg?react'
 import DetailsIcon from './Group.svg?react'
-
+import Right from './right.svg?react'
+import ArrowLeft from './arrow-left.svg?react'
 export {
   AddIcon,
   TrashIcon,
@@ -20,4 +21,6 @@ export {
   CheckIcon,
   LoaderIcon,
   DetailsIcon,
+  Right,
+  ArrowLeft,
 }

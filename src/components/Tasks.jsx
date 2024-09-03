@@ -53,8 +53,6 @@ const Tasks = () => {
   }
 
   const onTaskSubmitSuccess = (task) => {
-    //CHAMAR A API PARA ADICIONAR TAREFAS
-
     setTasks([...tasks, task])
     toast.success('Tarefa adicionada!')
   }
@@ -63,6 +61,10 @@ const Tasks = () => {
     const newTasks = tasks.filter((task) => task.id !== taskId)
     setTasks(newTasks)
     toast.success('Tarefa deletada com sucesso')
+  }
+
+  const OnTaskSubmitError = () => {
+    toast.error('Erro ao adicionar tarefa. Por favor, tente novamente.')
   }
 
   return (
@@ -89,6 +91,7 @@ const Tasks = () => {
             isOpen={addTaskDialogIsOpen}
             handleClose={() => setAddTaskDialogIsOpen(false)}
             onSubmiteSuccess={onTaskSubmitSuccess}
+            onSubmiteError={OnTaskSubmitError}
           ></AddTaskDialog>
         </div>
       </div>

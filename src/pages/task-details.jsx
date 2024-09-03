@@ -103,6 +103,7 @@ const TaskDetailsPage = () => {
               onClick={handleDeleteClick}
               className="h-fit self-end"
               color="danger"
+              type="button"
             >
               <TrashIcon />
               Deletar Tarefa

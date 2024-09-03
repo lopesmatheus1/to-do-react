@@ -93,7 +93,7 @@ TaskItem.propTypes = {
   }).isRequired,
 
   handleCheckBoxClick: PropTypes.func.isRequired,
-  handleDeleteClick: PropTypes.func.isRequired,
+  handleDeleteClick: PropTypes.func,
 }
 
 export default TaskItem

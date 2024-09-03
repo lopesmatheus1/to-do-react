@@ -1,18 +1,3 @@
 {
-  "tasks": [
-    {
-      "id": "f28574a1-b25f-41fa-975a-df6b9a828a90",
-      "title": "blabla",
-      "time": "morning",
-      "description": "bla bla",
-      "status": "not_started"
-    },
-    {
-      "id": "a6a22103-eadb-4fcc-ab23-e7d74332ad1d",
-      "title": "Ir pra academia",
-      "time": "morning",
-      "description": "TREINO DE PEITO BOLADO PRA FICAR PEGADO DMS",
-      "status": "not_started"
-    }
-  ]
+  "tasks": []
 }

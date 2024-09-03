@@ -1,17 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
-import { Right, ArrowLeft, TrashIcon } from '../assets/icons/index'
+import { Right, ArrowLeft, TrashIcon, LoaderIcon } from '../assets/icons/index'
 
 import Button from '../components/Button'
 
 import Input from '../components/Input'
 import TimeSelect from '../components/TimeSelect'
+import { toast } from 'sonner'
 
 /* eslint-disable react/react-in-jsx-scope */
+
 const TaskDetailsPage = () => {
   const { taskId } = useParams()
   const [task, setTask] = useState()
+  const [saveIsLoading, setSaveIsLoading] = useState(false)
+  const [errors, setErrors] = useState([])
+
+  const titleRef = useRef()
+  const descriptionRef = useRef()
+  const timeRef = useRef()
+
   const navigate = useNavigate()
   const handleBackClick = () => {
     navigate(-1)
@@ -27,6 +36,53 @@ const TaskDetailsPage = () => {
     }
     fetchTask()
   }, [taskId])
+
+  const handleSaveClick = async () => {
+    setSaveIsLoading(true)
+    const newErros = []
+    const title = titleRef.current.value
+    const description = descriptionRef.current.value
+
+    if (!title.trim()) {
+      newErros.push({
+        inputName: 'title',
+        message: 'O título é obrigatório.',
+      })
+    }
+
+    if (!description.trim()) {
+      newErros.push({
+        inputName: 'description',
+        message: 'A descrição é obrigatório.',
+      })
+    }
+    setErrors(newErros)
+    if (newErros.length > 0) {
+      return setSaveIsLoading(false)
+    }
+
+    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        title,
+        description,
+      }),
+    })
+    if (!response.ok) {
+      return setSaveIsLoading(false)
+    }
+    const newTask = await response.json()
+    setTask(newTask)
+    setSaveIsLoading(false)
+    toast.success('Tarefa salva com sucesso')
+  }
+
+  const titleError = errors.find((error) => error.inputName === 'title')
+  const timeError = errors.find((error) => error.inputName === 'time')
+  const descriptionError = errors.find(
+    (error) => error.inputName === 'description'
+  )
+
   return (
     <div className="flex">
       <Sidebar />
@@ -65,31 +121,43 @@ const TaskDetailsPage = () => {
 
         <div className="space-y-6 rounded-xl bg-brand-white p-6">
           <div>
-            <Input id="title" label="Título" value={task?.title} />
+            <Input
+              id="title"
+              label="Título"
+              defaultValue={task?.title}
+              errorMessage={titleError?.message}
+              ref={titleRef}
+            />
           </div>
 
           <div>
-            <TimeSelect value={task.time}></TimeSelect>
+            <TimeSelect
+              defaultValue={task?.time}
+              ref={timeRef}
+              errorMessage={timeError?.message}
+            ></TimeSelect>
           </div>
 
           <div>
             <Input
               id="description"
               label="Descrição"
-              value={task?.description}
+              defaultValue={task?.description}
+              errorMessage={descriptionError?.message}
+              ref={descriptionRef}
             />
           </div>
         </div>
 
         <div className="flex w-full justify-end gap-3">
           <Button
-            color="secondary"
+            color="primary"
             size="large"
-            className="text-brand-dark-gray"
+            className="bg-opacity-30"
+            onClick={handleSaveClick}
+            disabled={saveIsLoading}
           >
-            Cancelar
-          </Button>
-          <Button color="primary" size="large" className="bg-opacity-30">
+            {saveIsLoading && <LoaderIcon className="animate-spin" />}
             Salvar
           </Button>
         </div>

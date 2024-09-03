@@ -34,6 +34,15 @@ const AddTaskDialog = ({
 
   const nodeRef = useRef()
 
+  const handleCancelClick = () => {
+    reset({
+      title: '',
+      time: 'morning',
+      description: '',
+    })
+    handleClose()
+  }
+
   const handleSaveClick = async (data) => {
     const task = {
       id: v4(),
@@ -122,8 +131,8 @@ const AddTaskDialog = ({
                       size={'large'}
                       className="w-full"
                       color="secondary"
-                      onClick={handleClose}
                       type="button"
+                      onClick={handleCancelClick}
                     >
                       Canelar
                     </Button>
